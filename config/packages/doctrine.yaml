@@ -3,7 +3,7 @@ doctrine:
         default_connection: gite
         connections:
             gite:
-                driver: '%env(resolve:pdo_mysql)%'
+                driver: '%env(resolve:DB_CONNECTION)%'
                 host: '%env(resolve:DB_HOST)%'
                 port: '%env(resolve:DB_PORT)%'
                 dbname: '%env(resolve:DB_DATABASE)%'
