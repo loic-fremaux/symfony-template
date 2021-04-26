@@ -14,6 +14,7 @@
 
 ## Utilisation vitejs in symfony
 
+- Setup nodejs with `npm install` outside the docker container
 - start services outside the docker container to refresh the page `npm run dev`
 - check the variable `VITE_DEV` to 1 for the dev in .env
 - For images creates a symbolic link in the public folder `ln -s ../assets/ assets`
