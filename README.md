@@ -13,6 +13,7 @@
 
 ## Utilisation vitejs in symfony
 
+- Start container dev `docker-compose up`
 - check the variable `VITE_DEV` to 1 for the dev in .env
 - For images creates a symbolic link in the public folder `ln -s ../assets/ assets`
 - Dependency install `vitejs`, `react vanilla` and `sass`
