@@ -11,9 +11,11 @@
 
         {% block javascripts %}
             {#{{ encore_entry_script_tags('app') }}#}
+            {{ vite_asset('main.jsx', ['react']) }}
         {% endblock %}
     </head>
     <body>
         {% block body %}{% endblock %}
+    <div id="root"></div>
     </body>
 </html>

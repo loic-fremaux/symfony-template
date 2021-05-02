@@ -15,5 +15,9 @@ framework:
         #app: cache.adapter.apcu
 
         # Namespaced pools use the above "app" backend by default
+        pools:
+            vite_cache_pool:
+                adapter: cache.adapter.array
+                default_lifetime: 0
         #pools:
             #my.dedicated.cache: null
