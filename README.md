@@ -11,4 +11,4 @@
 ## Use vitejs
 
 - Start container with `docker-compose up -d`
-- For images create a symbolic link in the public folder `ln -s ../assets/ assets`
+- Create a symbolic link in the public folder `ln -s ../assets/ assets`
