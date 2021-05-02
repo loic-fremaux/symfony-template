@@ -10,93 +10,93 @@ npm = npm install
 
 ## —— Docker 🐳  ———————————————————————————————————————————————————————————————
 .PHONY: start
-start:	## Lancer les containers docker
+start:	## Start docker stack
 	$(dc) up -d
 
 .PHONY: build
-build:	## Lancer les containers docker au start du projet
+build:	## Install composer and nodejs dependencies
 	$(dc) up -d
 	$(composer) install
 	$(dc) exec php bash -c 'npm install'
 	$(dc) up
 
 .PHONY: start
-stop:	## Arréter les containers docker
+stop:	## Stop all containers
 	$(dc) stop
 
 .PHONY: rm
-down:    ## Supprimer les containers docker
+down:    ## Stop and remove all containers
 	$(dc) down
 
 .PHONY: restart
-restart: down start	## redémarrer les containers
+restart: down start	## Restart (rebuild) containers
 
 .PHONY: in-dc
-in-dc:	## Connexion au container php
+in-dc:	## Run into php container
 	$(de) php bash
 
-.PHONY: dev ##Lance le serveur de développement
+.PHONY: dev ## Run dev server
 dev:
 	$(dc) up
 
 ## —— Symfony ———————————————————————————————————————————————————————————————
 
 .PHONY: vendor-install
-vendor-install: ## Installation des vendor
+vendor-install: ## Install composer dependencies
 	$(COMPOSER) install
 
 .PHONY: vendor-update
-vendor-update:	## Mise à jour des vendors
+vendor-update:	## Update composer dependencies
 	$(COMPOSER) update
 
 .PHONY: clean-vendor
-clean-vendor: cc-hard ## Suppression du répertoire vendor puis un réinstall
+clean-vendor: cc-hard ## Reinstall dependencies
 	$(de) rm -Rf vendor
 	$(de) rm composer.lock
 	$(COMPOSER) install
 
 .PHONY: cc-hard
-cc-hard: ## Supprimer le répertoire cache
+cc-hard: ## Remove cache folder
 	$(de) rm -fR var/cache/*
 
 .PHONY: cc
-cc:	## Vider le cache
+cc:	## Clear cache using php console
 	$(sy) c:c
 
 .PHONY: migration
-migration:	## Crée une migration
+migration:	## Create migration
 	$(sy) make:migration
 
 .PHONY: migrate
-migrate:	## Migré une migration
+migrate:	## Execute pending migrations
 	$(sy) d:m:m
 
 .PHONY: form
-form:	## Crée un formulaire
+form:	## Create a form
 	$(sy) make:form
 
 .PHONY: controller
-controller:	## Crée un controller
+controller:	## Create a controller
 	$(sy) make:controller
 
 .PHONY: login
-login:	## Crée la partie authentification
+login:	## Create auth interface
 	$(sy) make:auth
 
 .PHONY: register
-register:	## Crée la partie registration
+register:	## Create registration interface
 	$(sy) make:registration-form
 
 .PHONY: user
-user:	## Crée l'entity user
+user:	## Create user entity
 	$(sy) make:user
 
 .PHONY: clean-db
-clean-db: ## Réinitialiser la base de donnée
+clean-db: ## Clear database
 	- $(sy) d:d:d --force --connection
 	$(sy) d:d:c
 	$(sy) d:m:m --no-interaction
 
 ## —— Others 🛠️️ ———————————————————————————————————————————————————————————————
-help: ## Liste des commandes
+help: ## Show help
 	@grep -E '(^[a-zA-Z0-9_-]+:.*?##.*$$)|(^##)' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}{printf "\033[32m%-30s\033[0m %s\n", $$1, $$2}' | sed -e 's/\[32m##/[33m/'
