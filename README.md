@@ -10,6 +10,5 @@
 
 ## Use vitejs
 
-- add variable in the .env file `VITE_DEV=1`
 - Start container with `docker-compose up -d`
 - Create a symbolic link in the public folder `ln -s ../assets/ assets`
