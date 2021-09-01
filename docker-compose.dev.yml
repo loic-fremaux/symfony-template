@@ -1,6 +1,5 @@
 version: '3.7'
 services:
-
   # PHP Service
   php:
     build:
@@ -56,6 +55,19 @@ services:
     command: redis-server --requirepass ${REDIS_PASSWORD}
     env_file:
       - .env
+    networks:
+      - app_network
+
+  # Phpmyadmin
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - "8585:80"
+    container_name: ${APP_SLUG}_phpmyadmin
+    depends_on:
+      - database
+    environment:
+      PMA_HOST: ${DB_HOST}
     networks:
       - app_network
 
